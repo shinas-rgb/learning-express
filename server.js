@@ -1,7 +1,13 @@
-const express = require("express");
-const path = require("path");
+import express from 'express';
+import path from 'path';
+import posts from './routes/posts.js';
 
 const app = express();
+const PORT = process.env.PORT || 8000;
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use('/api/posts', posts);
 
 // We can setup route like this or
 // app.get('/', (req, res) => {
@@ -14,16 +20,6 @@ const app = express();
 
 // app.use(express.static(path.join(__dirname, 'public')));
 
-let posts = [
-  { id: 1, post: "post one" },
-  { id: 2, post: "post two" },
-  { id: 3, post: "post three" },
-  { id: 4, post: "post four" },
-]
 
-app.get('/api/posts', (req, res) => {
-  res.json(posts);
-});
-
-app.listen(8000, () => console.log("Server running at port 8000"));
+app.listen(PORT, () => console.log(`Server running at port ${PORT}`));
 
